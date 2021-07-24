@@ -1,19 +1,8 @@
-Like https://github.com/cccooo/rtl8812au-centos-7.6, forked from aircrack-ng/rtl8188eus and modified for CentOS 7.9
-as CentOS Kernel 3.10 contains many code from 4.x
+this project is a fork from aircrack-ng/rtl8188eus
 
-## rtl8188eus v5.3.9
 
-# Realtek rtl8188eus &amp; rtl8188eu &amp; rtl8188etv WiFi drivers
+# tutorial describes how to enable monitor mode in TP-LINK TL-WN722N V2/V3 in KALI LINUX
 
-[![Monitor mode](https://img.shields.io/badge/monitor%20mode-supported-brightgreen.svg)](#)
-[![Frame Injection](https://img.shields.io/badge/frame%20injection-supported-brightgreen.svg)](#)
-[![MESH Mode](https://img.shields.io/badge/mesh%20mode-supported-brightgreen.svg)](#)
-[![GitHub issues](https://img.shields.io/github/issues/aircrack-ng/rtl8188eus.svg)](https://github.com/aircrack-ng/rtl8188eus/issues)
-[![GitHub forks](https://img.shields.io/github/forks/aircrack-ng/rtl8188eus.svg)](https://github.com/aircrack-ng/rtl8188eus/network)
-[![GitHub stars](https://img.shields.io/github/stars/aircrack-ng/rtl8188eus.svg)](https://github.com/aircrack-ng/rtl8188eus/stargazers)
-[![GitHub license](https://img.shields.io/github/license/aircrack-ng/rtl8812au.svg)](https://github.com/aircrack-ng/rtl8188eus/blob/master/LICENSE)<br>
-[![Android](https://img.shields.io/badge/android%20(8)-supported-brightgreen.svg)](#)
-[![aircrack-ng](https://img.shields.io/badge/aircrack--ng-supported-blue.svg)](#)
 
 
 # Supports
@@ -25,47 +14,33 @@ as CentOS Kernel 3.10 contains many code from 4.x
 ... And a bunch of various wifi chipsets
 
 # Howto build/install
-1. You will need to blacklist another driver in order to use this one.
-2. `echo 'blacklist r8188eu'|sudo tee -a '/etc/modprobe.d/realtek.conf'`
-3. `make && sudo make install`
-4. Reboot in order to blacklist and load the new driver/module.
+1. `sudo apt update`
+2. `sudo apt install bc`
+3. `sudo rmmod r8188eu.ko`
+4. `git clone https://github.com/roobini-gamer/TL-WN722N-monitor`
+5. `cd rtl8188eus`
+6. `sudo -i`
+7. `echo "blacklist r8188eu" > "/etc/modprobe.d/realtek.conf"`
+8. `exit`
+9. `make`
+10. `sudo make install`
+11. `sudo modprobe 8188eu`
+
 
 # MONITOR MODE howto
 Use these steps to enter monitor mode.
 ```
-$ sudo airmon-ng check kill
-$ sudo ip link set <interface> down
-$ sudo iw dev <interface> set type monitor
-```
-Frame injection test may be performed with
-(after kernel v5.2 scanning is slow, run a scan or simply an airodump-ng first!)
-```
-$ aireplay -9 <interface>
+$ ifconfig wlan0 down
+$ airmon-ng check kill
+$ iwconfig wlan0 mode monitor
+$ ifconfig wlan0 up
+$ iwconfig
 ```
 
-# NetworkManager configuration
-Add these lines below to "NetworkManager.conf" and ADD YOUR ADAPTER MAC below [keyfile]
-This will make the Network-Manager ignore the device, and therefore don't cause problems.
-```
-[device]
-wifi.scan-rand-mac-address=no
-
-[ifupdown]
-managed=false
-
-[connection]
-wifi.powersave=0
-
-[main]
-plugins=keyfile
-
-[keyfile]
-unmanaged-devices=mac:A7:A7:A7:A7:A7
-```
 
 # Credits
 Realtek       - https://www.realtek.com<br>
 Alfa Networks - https://www.alfa.com.tw<br>
 aircrack-ng.  - https://www.aircrack-ng.org<br>
-<br>
-And all those who may be using or contributing to it of anykind. Thanks!<br>
+contributors  - https://github.com/aircrack-ng/rtl8188eus/graphs/contributors<br>
+
